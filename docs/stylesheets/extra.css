@@ -1,72 +1,133 @@
 /*
- * DC Suite docs theme — tuned to match podstack.ai:
- * near-black surfaces, an orange (#F97316) accent, Inter + JetBrains Mono.
- * Fonts come from the theme.font config; this file fixes the exact palette
- * that Material's named "black"/"deep orange" only approximate.
+ * DC Suite docs theme — tuned to match podstack.ai exactly.
+ * Palette + type sampled from podstack.ai's own stylesheet:
+ *   bg #0a0a0f / #050508, panels #18181b / #111118,
+ *   body #d4d4d8, muted #9090a8, headings #fff,
+ *   accent #f97316 (hover #fb923c), hairline borders rgba(255,255,255,.07).
+ * Fonts (Inter + JetBrains Mono) come from theme.font.
  */
 
 :root {
   --ps-orange: #f97316;        /* brand accent (orange-500) */
-  --ps-orange-strong: #ea580c; /* orange-600, for links on light bg */
-  --ps-orange-bright: #fb923c; /* orange-400, hover on dark bg */
-  --ps-ink: #0a0a0f;           /* podstack near-black background */
-  --ps-ink-2: #04060a;         /* deeper black (header/footer) */
-  --ps-panel: #141a26;         /* raised surface (cards, code) */
-  --ps-border: #1f2633;
-  --ps-muted: #707a8f;
+  --ps-orange-strong: #ea580c; /* orange-600, links on light bg */
+  --ps-orange-bright: #fb923c; /* orange-400, hover on dark */
+
+  --ps-bg: #0a0a0f;            /* main background */
+  --ps-bg-deep: #050508;       /* header / footer / deepest chrome */
+  --ps-panel: #111118;         /* raised surface */
+  --ps-panel-2: #18181b;       /* code / secondary surface */
+  --ps-border: rgba(255, 255, 255, 0.07);
+  --ps-border-strong: rgba(255, 255, 255, 0.12);
+
+  --ps-text: #d4d4d8;          /* body text (zinc-300) */
+  --ps-heading: #ffffff;       /* headings */
+  --ps-muted: #9090a8;         /* muted / secondary text */
 }
 
-/* ---- Dark scheme (default), mirrors podstack.ai ---- */
+/* ============ Dark scheme (default) — mirrors podstack.ai ============ */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: var(--ps-ink-2);
-  --md-primary-fg-color--light: var(--ps-ink);
-  --md-primary-fg-color--dark: var(--ps-ink-2);
+  --md-hue: 240;
+
+  --md-primary-fg-color: var(--ps-bg-deep);
+  --md-primary-fg-color--light: var(--ps-bg);
+  --md-primary-fg-color--dark: var(--ps-bg-deep);
 
   --md-accent-fg-color: var(--ps-orange);
 
-  --md-default-bg-color: var(--ps-ink);
-  --md-default-bg-color--light: var(--ps-ink);
+  --md-default-bg-color: var(--ps-bg);
+  --md-default-bg-color--light: var(--ps-bg);
+  --md-default-bg-color--lighter: var(--ps-bg);
+  --md-default-bg-color--lightest: var(--ps-bg);
 
-  --md-code-bg-color: var(--ps-panel);
+  --md-default-fg-color: var(--ps-text);
+  --md-default-fg-color--light: var(--ps-muted);
+  --md-default-fg-color--lighter: var(--ps-muted);
+
+  --md-typeset-color: var(--ps-text);
   --md-typeset-a-color: var(--ps-orange);
 
-  --md-footer-bg-color: var(--ps-ink-2);
-  --md-footer-bg-color--dark: var(--ps-ink-2);
+  --md-code-bg-color: var(--ps-panel-2);
+  --md-code-fg-color: #e6e6ea;
+
+  --md-footer-bg-color: var(--ps-bg-deep);
+  --md-footer-bg-color--dark: var(--ps-bg-deep);
+}
+
+/* Headings are pure white and heavy, like the marketing site. */
+[data-md-color-scheme="slate"] .md-typeset :is(h1, h2, h3, h4) {
+  color: var(--ps-heading);
 }
 
 [data-md-color-scheme="slate"] .md-typeset a:hover {
   color: var(--ps-orange-bright);
 }
 
-/* Cards / admonitions sit on a slightly raised near-black panel. */
+/* Raised surfaces on a slightly lighter near-black with a hairline border. */
 [data-md-color-scheme="slate"] .md-typeset .admonition,
 [data-md-color-scheme="slate"] .md-typeset details,
+[data-md-color-scheme="slate"] .md-typeset pre,
 [data-md-color-scheme="slate"] .grid.cards > :is(ul, ol) > li,
 [data-md-color-scheme="slate"] .grid.cards > .card {
   background: var(--ps-panel);
   border: 1px solid var(--ps-border);
 }
 
-/* ---- Light scheme: keep the orange identity, darker for contrast ---- */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: var(--ps-panel);
+  color: var(--ps-heading);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) td,
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  border-color: var(--ps-border);
+}
+
+/* Sidebars/nav muted like podstack's secondary text. */
+[data-md-color-scheme="slate"] .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav__title {
+  color: var(--ps-muted);
+}
+[data-md-color-scheme="slate"] .md-nav__link--active,
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+  color: var(--ps-heading);
+}
+
+/* ============ Light scheme — keep the orange identity ============ */
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color: var(--ps-ink-2);
+  --md-primary-fg-color: var(--ps-bg-deep);
   --md-accent-fg-color: var(--ps-orange-strong);
   --md-typeset-a-color: var(--ps-orange-strong);
 }
 
-/* ---- Shared brand touches ---- */
+/* ============ Shared brand chrome ============ */
 
-/* Header/nav is near-black in both schemes (podstack's dark chrome). */
+/* Header + tabs are the deepest near-black in both schemes. */
 .md-header,
 .md-tabs {
-  background-color: var(--ps-ink-2);
+  background-color: var(--ps-bg-deep);
   color: #f4f4f5;
 }
+.md-header--shadow {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
 
-/* Active top-level tab gets the orange underline. */
-.md-tabs__link--active {
-  color: #fff;
-  opacity: 1;
+/* The logo mark keeps its own colors; size it to sit with the title. */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.5rem;
+  width: auto;
+}
+
+/* Brand-orange primary buttons (the "Get started" CTA). */
+.md-typeset .md-button--primary {
+  background-color: var(--ps-orange);
+  border-color: var(--ps-orange);
+  color: #0a0a0f;
+  font-weight: 600;
+}
+.md-typeset .md-button--primary:hover {
+  background-color: var(--ps-orange-bright);
+  border-color: var(--ps-orange-bright);
+  color: #0a0a0f;
 }
 
 /* Search field on the dark header. */
@@ -77,32 +138,38 @@
   background-color: rgba(255, 255, 255, 0.14);
 }
 
-/* Buttons (e.g. the "Get started" call-to-action) in brand orange. */
-.md-typeset .md-button--primary {
-  background-color: var(--ps-orange);
-  border-color: var(--ps-orange);
-  color: #0a0a0f;
+/* Typography: Inter with tight, heavy headings like podstack.ai. */
+.md-typeset {
+  font-feature-settings: "kern", "liga";
 }
-.md-typeset .md-button--primary:hover {
-  background-color: var(--ps-orange-bright);
-  border-color: var(--ps-orange-bright);
-  color: #0a0a0f;
+.md-typeset h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
-
-/* Inline code + fenced blocks use the mono brand face; keep them tight. */
-.md-typeset code,
-.md-typeset pre > code {
-  font-feature-settings: "kern";
-}
-
-/* Section headings: a touch tighter, like the marketing site. */
-.md-typeset h1,
 .md-typeset h2 {
-  letter-spacing: -0.01em;
   font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.md-typeset h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* Selection uses the accent. */
+/* Inline code chips get the panel background + subtle border. */
+.md-typeset code {
+  border-radius: 0.3rem;
+}
+
+/* Selection + focus in brand orange. */
 ::selection {
-  background: rgba(249, 115, 22, 0.30);
+  background: rgba(249, 115, 22, 0.3);
+}
+.md-typeset :is(h1, h2, h3):target {
+  scroll-margin-top: 4rem;
+}
+
+/* Accent bar on the left of admonitions in brand orange for "note" family. */
+.md-typeset .admonition.note,
+.md-typeset .admonition.info {
+  border-left: 3px solid var(--ps-orange);
 }

@@ -18,11 +18,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -31,10 +35,9 @@ jobs:
         run: mkdocs build --strict
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Creates the project on first run if it doesn't exist yet
-          # (requires a token with Account > Cloudflare Pages > Edit).
-          command: pages deploy site --project-name=dcsuite-docs --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        # Run wrangler directly (under Node 24) instead of cloudflare/wrangler-action,
+        # so no action pins us to the deprecated Node 20 runtime.
+        run: npx --yes wrangler@4 pages deploy site --project-name=dcsuite-docs --branch=main

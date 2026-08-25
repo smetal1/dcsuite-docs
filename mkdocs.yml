@@ -16,16 +16,16 @@ theme:
     text: Inter
     code: JetBrains Mono
   palette:
-    # Dark is the default, matching podstack.ai (near-black + orange accent).
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    # Dark is the default for EVERYONE (podstack.ai is a dark-only site), with
+    # a toggle to light. No prefers-color-scheme media query, so an OS set to
+    # light still lands on the branded dark theme first.
+    - scheme: slate
       primary: black
       accent: deep orange
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
+    - scheme: default
       primary: black
       accent: deep orange
       toggle:
