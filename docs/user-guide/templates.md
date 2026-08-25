@@ -42,8 +42,61 @@ Add a template two ways:
 
 A template zip contains the module's `*.tf` files. It may optionally include a
 `manifest.json` at the root describing metadata (title, description, category,
-inputs). If present, the manifest is used to populate the catalog entry; if
-absent, sensible defaults are derived.
+inputs). If present, the manifest populates the catalog entry; if absent,
+sensible defaults are derived from the module.
+
+```
+my-template.zip
+├── manifest.json        # optional metadata (shallowest one wins)
+├── main.tf              # the module
+├── variables.tf
+└── outputs.tf
+```
+
+A `manifest.json` looks like:
+
+```json
+{
+  "title": "JupyterLab",
+  "description": "A JupyterLab server exposed on the cluster.",
+  "category": "ML Framework",
+  "icon": "🪐",
+  "applicable_profiles": ["gpu-l40s", "gpu-hgx-h100"],
+  "inputs": [
+    {
+      "name": "port",
+      "type": "number",
+      "required": false,
+      "default": 8888,
+      "description": "Port JupyterLab listens on."
+    },
+    {
+      "name": "conda_env",
+      "type": "string",
+      "required": true,
+      "description": "Name of the conda environment to launch in."
+    }
+  ]
+}
+```
+
+| Field | Purpose |
+| --- | --- |
+| `title` / `description` | Shown on the catalog card and detail page. |
+| `category` | Filter bucket (Scheduler, Orchestration, ML Framework, Monitoring). |
+| `icon` | Emoji or an image URL (see [Icons](#icons)). |
+| `applicable_profiles` | Restrict which hardware profiles the template targets; omit for all. |
+| `inputs[]` | Parameters the apply form collects: `name`, `type`, `required`, `default`, `description`. |
+
+### How an apply runs
+
+Applying a template runs its module against the target cluster as a tracked
+**run**. The platform injects the cluster's context (node addresses, an access
+identity, and platform variables such as the cluster id and public domain) so
+the module can wire itself to the running cluster. You watch progress in the
+run view; when the run reaches `APPLIED`, the software is live. A run that
+declares an exposed web port automatically gets the per-cluster public HTTPS
+URL described in [Access & Networking](access-networking.md).
 
 !!! tip "Start from an existing template"
     You can **download the `.zip`** of any globally available template, modify

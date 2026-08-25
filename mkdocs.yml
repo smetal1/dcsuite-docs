@@ -1,13 +1,17 @@
-site_name: DC Suite Documentation
+site_name: Podstack - DC Suite
 site_description: >-
   DC Suite is a control plane for self-service GPU cloud clusters on
   bare-metal infrastructure — create clusters, run jobs, and manage the fleet.
-site_author: DC Suite
-copyright: Copyright &copy; DC Suite
+site_author: Podstack
+copyright: >-
+  &copy; <a href="https://podstack.ai" target="_blank" rel="noopener">podstack.ai</a>
+  — DC Suite documentation.
 
 theme:
   name: material
   language: en
+  logo: assets/podstack-logo.svg
+  favicon: assets/favicon.png
   font:
     text: Inter
     code: JetBrains Mono
@@ -69,6 +73,17 @@ plugins:
 extra_css:
   - stylesheets/extra.css
 
+extra:
+  # Removes the "Made with Material for MkDocs" line from the footer.
+  generator: false
+  social:
+    - icon: fontawesome/solid/globe
+      link: https://podstack.ai
+      name: podstack.ai
+    - icon: fontawesome/brands/github
+      link: https://github.com/smetal1/dcsuite-docs
+      name: Source on GitHub
+
 nav:
   - Home: index.md
   - User Guide:
@@ -78,11 +93,14 @@ nav:
       - Creating a Cluster: user-guide/creating-clusters.md
       - Managing Clusters: user-guide/managing-clusters.md
       - Access & Networking: user-guide/access-networking.md
+      - Storage & Data: user-guide/storage.md
       - Running Jobs: user-guide/jobs.md
       - Templates: user-guide/templates.md
       - Images: user-guide/images.md
       - Observability: user-guide/observability.md
       - Cost & Billing: user-guide/cost.md
+      - Quotas & Limits: user-guide/quotas.md
+      - Security & Isolation: user-guide/security.md
       - API Reference: user-guide/api.md
   - Operators:
       - operators/index.md

@@ -98,6 +98,32 @@ Keep credentials in your secret manager, injected at render time:
 
 Never place secrets in the YAML config or in this documentation.
 
+## Quick key reference
+
+| Key | Required (prod) | Purpose |
+| --- | --- | --- |
+| `env` | ✅ | `demo` or `prod`; `prod` fails closed on missing config. |
+| `listen_addr` | ✅ | Bind address for the API server. |
+| `database_url` | ✅ | PostgreSQL DSN (password from a secret). |
+| `workflow_host_port` | ✅ | Durable workflow engine endpoint. |
+| `workflow_namespace` | ✅ | Namespace for DC Suite's workflows. |
+| `fleet.mode` | ✅ | `real` (drive the fleet manager) or `fake` (tests/demo). |
+| `observability.otlp_endpoint` | ✅ | OTLP collector for traces/telemetry. |
+| `observability.prometheus_url` | ✅ | Metrics query endpoint. |
+| `observability.loki_url` | ✅ | Logs query endpoint. |
+| `observability.loki_tenant` | ⚠️ | `X-Scope-OrgID` for a multi-tenant logs backend (else 401 → 502). |
+| `observability.prometheus_tenant` | – | `X-Scope-OrgID` for a multi-tenant metrics backend. |
+| `observability.log_stream_selector` | – | Loki stream selector matching your log labels. |
+
+Legend: ✅ required in `prod`; ⚠️ required only if your backend is
+multi-tenant; – optional.
+
+## Startup verification
+
+On boot in `prod` the server validates required config and **refuses to start**
+if any is missing — the logs name exactly what's absent. A healthy start logs
+the resolved (non-secret) config; watch for it after a deploy.
+
 ---
 
 **Next:** [Bare-Metal Onboarding](bare-metal.md).

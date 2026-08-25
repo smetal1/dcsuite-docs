@@ -13,11 +13,14 @@ know how the platform is deployed; you just need an account.
 | Spin up a GPU cluster | [Creating a Cluster](creating-clusters.md) |
 | Resize, power-cycle, or delete a cluster | [Managing Clusters](managing-clusters.md) |
 | SSH in and expose web UIs | [Access & Networking](access-networking.md) |
+| Understand storage tiers and keep your data | [Storage & Data](storage.md) |
 | Submit and track SLURM jobs | [Running Jobs](jobs.md) |
 | Apply software stacks to a cluster | [Templates](templates.md) |
 | Build and promote machine images | [Images](images.md) |
 | Watch live metrics and logs | [Observability](observability.md) |
 | See what you are spending | [Cost & Billing](cost.md) |
+| Understand quotas and availability | [Quotas & Limits](quotas.md) |
+| Understand isolation and access control | [Security & Isolation](security.md) |
 | Automate against the REST API | [API Reference](api.md) |
 
 ## Prerequisites

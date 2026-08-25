@@ -34,6 +34,43 @@ identity, roles, and effective scope.
   body. `403` means your role lacks the permission; `404` means not found (or,
   for some endpoints, not accessible to your scope).
 
+## Status codes
+
+| Code | Meaning | What to do |
+| --- | --- | --- |
+| `200` / `201` | Success | — |
+| `202` | Accepted — async action started | Poll the operation. |
+| `400` | Bad request (validation) | Fix the request body/params. |
+| `401` | Not authenticated | Refresh/attach a valid bearer token. |
+| `403` | Authenticated but not permitted | Your role lacks the permission at this scope. |
+| `404` | Not found (or not visible to your scope) | Check the id and your scope. |
+| `409` | Conflict (e.g. state doesn't allow the action) | Re-read the resource; retry when valid. |
+| `429` | Rate limited | Back off and retry with a delay. |
+| `5xx` | Server error | Retry with backoff; if persistent, contact operators. |
+
+Error bodies are JSON: `{"error": "human-readable reason"}`.
+
+## Operations (async actions)
+
+Create, resize, delete, and power actions are asynchronous. The initial call
+returns an `operation_id`; poll:
+
+```
+GET /v1/clusters/{id}/operations/{opID}
+```
+
+`status` moves through `RUNNING → COMPLETED` or `RUNNING → FAILED` (with a
+reason). Poll at a modest interval (≈10s). Operations are durable — a
+control-plane restart resumes them, so a transient poll error doesn't mean the
+work stopped.
+
+## Pagination & filtering
+
+List endpoints return arrays; where a collection can be large, use the
+endpoint's documented `page`/`per_page` (or cursor) parameters and follow
+`result_info` to page through. Treat unknown response fields as
+forward-compatible — ignore what you don't use rather than failing on it.
+
 ## Endpoint map
 
 ### Identity
