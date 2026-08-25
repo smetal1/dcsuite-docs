@@ -1,0 +1,108 @@
+/*
+ * DC Suite docs theme — tuned to match podstack.ai:
+ * near-black surfaces, an orange (#F97316) accent, Inter + JetBrains Mono.
+ * Fonts come from the theme.font config; this file fixes the exact palette
+ * that Material's named "black"/"deep orange" only approximate.
+ */
+
+:root {
+  --ps-orange: #f97316;        /* brand accent (orange-500) */
+  --ps-orange-strong: #ea580c; /* orange-600, for links on light bg */
+  --ps-orange-bright: #fb923c; /* orange-400, hover on dark bg */
+  --ps-ink: #0a0a0f;           /* podstack near-black background */
+  --ps-ink-2: #04060a;         /* deeper black (header/footer) */
+  --ps-panel: #141a26;         /* raised surface (cards, code) */
+  --ps-border: #1f2633;
+  --ps-muted: #707a8f;
+}
+
+/* ---- Dark scheme (default), mirrors podstack.ai ---- */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--ps-ink-2);
+  --md-primary-fg-color--light: var(--ps-ink);
+  --md-primary-fg-color--dark: var(--ps-ink-2);
+
+  --md-accent-fg-color: var(--ps-orange);
+
+  --md-default-bg-color: var(--ps-ink);
+  --md-default-bg-color--light: var(--ps-ink);
+
+  --md-code-bg-color: var(--ps-panel);
+  --md-typeset-a-color: var(--ps-orange);
+
+  --md-footer-bg-color: var(--ps-ink-2);
+  --md-footer-bg-color--dark: var(--ps-ink-2);
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:hover {
+  color: var(--ps-orange-bright);
+}
+
+/* Cards / admonitions sit on a slightly raised near-black panel. */
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details,
+[data-md-color-scheme="slate"] .grid.cards > :is(ul, ol) > li,
+[data-md-color-scheme="slate"] .grid.cards > .card {
+  background: var(--ps-panel);
+  border: 1px solid var(--ps-border);
+}
+
+/* ---- Light scheme: keep the orange identity, darker for contrast ---- */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--ps-ink-2);
+  --md-accent-fg-color: var(--ps-orange-strong);
+  --md-typeset-a-color: var(--ps-orange-strong);
+}
+
+/* ---- Shared brand touches ---- */
+
+/* Header/nav is near-black in both schemes (podstack's dark chrome). */
+.md-header,
+.md-tabs {
+  background-color: var(--ps-ink-2);
+  color: #f4f4f5;
+}
+
+/* Active top-level tab gets the orange underline. */
+.md-tabs__link--active {
+  color: #fff;
+  opacity: 1;
+}
+
+/* Search field on the dark header. */
+.md-search__form {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.md-search__form:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Buttons (e.g. the "Get started" call-to-action) in brand orange. */
+.md-typeset .md-button--primary {
+  background-color: var(--ps-orange);
+  border-color: var(--ps-orange);
+  color: #0a0a0f;
+}
+.md-typeset .md-button--primary:hover {
+  background-color: var(--ps-orange-bright);
+  border-color: var(--ps-orange-bright);
+  color: #0a0a0f;
+}
+
+/* Inline code + fenced blocks use the mono brand face; keep them tight. */
+.md-typeset code,
+.md-typeset pre > code {
+  font-feature-settings: "kern";
+}
+
+/* Section headings: a touch tighter, like the marketing site. */
+.md-typeset h1,
+.md-typeset h2 {
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+/* Selection uses the accent. */
+::selection {
+  background: rgba(249, 115, 22, 0.30);
+}
