@@ -1,0 +1,91 @@
+site_name: DC Suite Documentation
+site_description: >-
+  DC Suite is a control plane for self-service GPU cloud clusters on
+  bare-metal infrastructure — create clusters, run jobs, and manage the fleet.
+site_author: DC Suite
+copyright: Copyright &copy; DC Suite
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.instant
+    - navigation.tracking
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/git-alt
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - User Guide:
+      - user-guide/index.md
+      - Getting Started: user-guide/getting-started.md
+      - Core Concepts: user-guide/concepts.md
+      - Creating a Cluster: user-guide/creating-clusters.md
+      - Managing Clusters: user-guide/managing-clusters.md
+      - Access & Networking: user-guide/access-networking.md
+      - Running Jobs: user-guide/jobs.md
+      - Templates: user-guide/templates.md
+      - Images: user-guide/images.md
+      - Observability: user-guide/observability.md
+      - Cost & Billing: user-guide/cost.md
+      - API Reference: user-guide/api.md
+  - Operators:
+      - operators/index.md
+      - Architecture: operators/architecture.md
+      - Installation: operators/installation.md
+      - Configuration: operators/configuration.md
+      - Bare-Metal Onboarding: operators/bare-metal.md
+      - SSO & Identity: operators/sso.md
+      - Deploys & Releases: operators/deploys.md
+      - Runbooks: operators/runbooks.md
+  - Reference:
+      - Glossary: reference/glossary.md
+      - FAQ & Troubleshooting: reference/faq.md
